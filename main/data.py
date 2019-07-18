@@ -6,8 +6,7 @@ Created on Fri Jul 12 22:07:14 2019
 """
 
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+import seaborn as ss
 
 #1 Data cleaning
 
