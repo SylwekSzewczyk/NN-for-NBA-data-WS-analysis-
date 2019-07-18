@@ -21,17 +21,8 @@ df.insert(22, 'WShares', df['WS'], allow_duplicates = True)
 df.insert(23, 'WShares/48', df['WS/48'], allow_duplicates = True)
 df.drop(['WS', 'WS/48'], axis = 1, inplace = True)
 
-#2 Data preprocessing
+#2 Data checking
 
-X = df.iloc[:,:-2].values
-y = df.iloc[:,-1].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
-
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-#3 Neural network implementation
 
 
