@@ -34,3 +34,8 @@ nn.compile(optimizer='adam', loss = 'mean_squared_error', metrics=['mae'])
 nn.fit(X_train, y_train, batch_size = 50, epochs = 100)
 
 y_pred = nn.predict(X_test)
+
+visualiser = PredictionError(nn)
+visualiser.fit(X_train, y_train)
+visualiser.score(X_test, y_test)
+visualiser.poof()
