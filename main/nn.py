@@ -12,7 +12,8 @@ from data import df, df1
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+
 #1 Data preprocessing
 
 X = df.iloc[:,:-2].values
@@ -35,7 +36,5 @@ nn.fit(X_train, y_train, batch_size = 50, epochs = 100)
 
 y_pred = nn.predict(X_test)
 
-visualiser = PredictionError(nn)
-visualiser.fit(X_train, y_train)
-visualiser.score(X_test, y_test)
-visualiser.poof()
+plt.scatter(y_pred, y_test)
+plt.show()
