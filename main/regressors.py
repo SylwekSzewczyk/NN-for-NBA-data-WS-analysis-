@@ -11,8 +11,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from yellowbrick.regressor import PredictionError, ResidualsPlot
 from data import df, df1
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.ensemble import RandomForestRegressor
+import numpy as np
 #1 Data preprocessing
 
 X = df.iloc[:,:-2].values
@@ -26,9 +27,12 @@ X_test = scaler.transform(X_test)
 
 #2 Build regressors
 
+regressor = Lasso(alpha=0.005, random_state=0)
+regressor.fit(X_train, y_train)
+
 regressor1 = RandomForestRegressor(n_estimators=300, random_state=0)
 regressor1.fit(X_train,y_train)
-visualiser = PredictionError(regressor1)
+visualiser = PredictionError(regressor)
 visualiser.fit(X_train, y_train)
 visualiser.score(X_test, y_test)
 visualiser.poof()
@@ -40,3 +44,10 @@ visualiser1.poof()
 
 
 y_pred1 = regressor1.predict(X_test)
+
+importance = pd.Series(np.abs(regressor.coef_.ravel()))
+importance.index = df.columns.values.tolist()[:20]
+importance.sort_values(inplace=True, ascending=False)
+importance.plot.bar()
+plt.ylabel('Lasso Coefficients')
+plt.title('Feature Importance')
