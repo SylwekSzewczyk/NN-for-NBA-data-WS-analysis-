@@ -12,6 +12,7 @@ from sklearn.preprocessing import StandardScaler
 from yellowbrick.regressor import PredictionError, ResidualsPlot
 from data import df, df1
 from sklearn.linear_model import LinearRegression, Lasso
+from sklearn.feature_selection import SelectFromModel
 from sklearn.ensemble import RandomForestRegressor
 import numpy as np
 #1 Data preprocessing
@@ -27,6 +28,20 @@ X_test = scaler.transform(X_test)
 
 #2 Build regressors
 
+# Feature engineering
+sel_ = SelectFromModel(Lasso(alpha=0.005, random_state=0)) # remember to set the seed, the random state in this function
+sel_.fit(df.drop(['WShares/48'], axis=1), df['WShares/48'])
+sel_.get_support
+
+selected_feat = df.drop(['WShares/48'], axis=1).columns[(sel_.get_support())]
+
+# let's print some stats
+print('total features: {}'.format((X.shape[1])))
+print('selected features: {}'.format(len(selected_feat)))
+print('features with coefficients shrank to zero: {}'.format(
+    np.sum(sel_.estimator_.coef_ == 0)))
+
+# Model building
 regressor = Lasso(alpha=0.005, random_state=0)
 regressor.fit(X_train, y_train)
 
