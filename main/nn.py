@@ -13,6 +13,7 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense
 import matplotlib.pyplot as plt
+import numpy as np
 
 #1 Data preprocessing
 
@@ -35,6 +36,11 @@ nn.compile(optimizer='adam', loss = 'mean_squared_error', metrics=['mae'])
 nn.fit(X_train, y_train, batch_size = 50, epochs = 100)
 
 y_pred = nn.predict(X_test)
+
+topredict = df1.loc[df1['WShares']== max(df1['WShares'])]
+topredict.drop(['WShares', 'WShares/48'], axis=1, inplace = True)
+values_topredict = topredict.values.tolist()
+prediction = nn.predict(scaler.transform(np.array(values_topredict)))
 
 plt.scatter(y_pred, y_test)
 plt.show()
