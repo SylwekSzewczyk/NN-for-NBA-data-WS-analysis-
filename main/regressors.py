@@ -42,9 +42,10 @@ print('features with coefficients shrank to zero: {}'.format(
     np.sum(sel_.estimator_.coef_ == 0)))
 
 # Model building
+# Lasso
 regressor = Lasso(alpha=0.005, random_state=0)
 regressor.fit(X_train, y_train)
-
+# Random Forest Regressor
 regressor1 = RandomForestRegressor(n_estimators=300, random_state=0)
 regressor1.fit(X_train,y_train)
 visualiser = PredictionError(regressor)
