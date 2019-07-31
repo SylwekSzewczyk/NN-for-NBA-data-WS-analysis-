@@ -34,24 +34,3 @@ df1 = df1[df1['G'] >= 10]
 df1.insert(22, 'WShares', df1['WS'], allow_duplicates = True)
 df1.insert(23, 'WShares/48', df1['WS/48'], allow_duplicates = True)
 df1.drop(['WS', 'WS/48'], axis = 1, inplace = True)
-
-#2 Data checking
-
-#sns.heatmap(df.corr(), annot=True)
-#sns.distplot(df['WShares/48'])
-
-#sns.heatmap(df1.corr(), annot=True)
-#sns.distplot(df1['WShares/48'])
-columns = df.columns.values.tolist()
-
-def analyse_continous(df, var):
-    df = df.copy()
-    df[var].hist(bins=20)
-    plt.figure()
-    plt.ylabel('Number of players')
-    plt.xlabel(var)
-    plt.title(var)              
-    plt.show()
-
-for var in columns:
-    analyse_continous(df, var)
