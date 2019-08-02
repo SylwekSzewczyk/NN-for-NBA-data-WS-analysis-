@@ -45,15 +45,18 @@ print('features with coefficients shrank to zero: {}'.format(
 # Lasso
 regressor = Lasso(alpha=0.005, random_state=0)
 regressor.fit(X_train, y_train)
+prediction_Lasso = regressor.predict(scaler.transform(np.array(values_topredict)))
 # Random Forest Regressor
 regressor1 = RandomForestRegressor(n_estimators=300, random_state=0)
 regressor1.fit(X_train,y_train)
+prediction_RFR = regressor1.predict(scaler.transform(np.array(values_topredict)))
+
 visualiser = PredictionError(regressor)
 visualiser.fit(X_train, y_train)
 visualiser.score(X_test, y_test)
 visualiser.poof()
 
-visualiser1 = ResidualsPlot(regressor1)
+visualiser1 = PredictionError(regressor1)
 visualiser1.fit(X_train, y_train)
 visualiser1.score(X_test, y_test)
 visualiser1.poof()
